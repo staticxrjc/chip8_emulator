@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "library.h"
+#include "chip8.h"
 
 class testF : public ::testing::Test {
 protected:

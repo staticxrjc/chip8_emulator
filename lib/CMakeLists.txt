@@ -1,8 +1,3 @@
-set(LIBRARY_NAME_SOURCES
-        "library.cpp")
-set(LIBRARY_NAME_HEADERS
-        "library.h")
+add_library(Chip8 Chip8.cpp)
 
-add_library(simple_library STATIC library.cpp)
-
-target_include_directories(simple_library PUBLIC "./")
+target_include_directories(Chip8 PUBLIC ${PROJECT_SOURCE_DIR})

@@ -36,7 +36,9 @@ namespace Emulator {
         void LoadROM(const std::string& filename);
 
         // Op Codes
-        void OP_OOEO(); // CLS
+        void OP_00E0(); // CLS - Clear the Display
+        void OP_00EE(); // RET - Return from a subroutine
+        void OP_1nnn(); // JMP - Jump to location nnn
 
     private:
         uint8_t registers[16]{};

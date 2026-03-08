@@ -38,10 +38,22 @@ namespace Emulator {
         // Op Codes
         void OP_00E0(); // CLS - Clear the Display
         void OP_00EE(); // RET - Return from a subroutine
-        void OP_1nnn(); // JMP - Jump to location nnn
+        void OP_1nnn(); // JMP addr - Jump to location nnn
+        void OP_2nnn(); // CALL addr - Call a subroutine at nnn
+        void OP_3xkk(); // SE Vx, byte - Skip next instruction if Vx = kk
+        void OP_4xkk(); // SNE Vx, byte - Skip next instruction if Vx != kk
+        void OP_5xy0(); // SE Vx, Vy - Skip next instruction if Vx = Vy
+        void OP_6xkk(); // LD Vx, byte - Set Vx = kk
+        void OP_7xkk(); // ADD Vx, byte - Set Vx = Vx + kk
+        void OP_8xy0(); // LD Vx, Vy - Set Vx = Vy
+        void OP_8xy1(); // OR Vx, Vy - Set Vx = VX OR Vy
+        void OP_8xy2(); // AND Vx, Vy - Set Vx = VX AND Vy
+        void OP_8xy3(); // XOR Vx, Vy - Set Vx = VX XOR Vy
+        void OP_8xy4(); // ADD Vx, Vy - Set Vx = Vx + Vy, Set VF = carry
+        void OP_8xy5(); // SUB Vx, Vy - Set Vx = Vx - Vy, Set VF = Vx > Vy
 
     private:
-        uint8_t registers[16]{};
+        uint8_t registers[16]{}; // VF, last register address 0xFu
         uint8_t memory[4096]{};
         uint16_t index{};
         uint16_t pc{};

@@ -163,4 +163,46 @@ namespace Emulator {
         registers[Vx] -= registers[Vy];
 
     }
+
+    void Chip8::OP_8xy6() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        // Save LSB in VF
+        registers[0xF] = registers[Vx & 0x1u];
+
+        registers[Vx] >>= 1;
+    }
+
+    void Chip8::OP_8xy7() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+        const uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+        if (Vy > Vx) {
+            registers[0xF] = 1;
+        }
+        else {
+            registers[0xF] = 0;
+        }
+
+        registers[Vy] -= registers[Vx];
+    }
+
+    void Chip8::OP_8xYE() {
+        const uint8_t Vx = (opcode & 0x0FF00u) >> 8u;
+
+        // Save MSB in VF
+        registers[0xF] = (registers[Vx] & 0x80u) >> 7u;
+
+        registers[Vx] <<= 1;
+    }
+
+    void Chip8::OP_9xy0() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+        const uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+
+        if (registers[Vx] != registers[Vy]) {
+            pc += 2;
+        }
+
+    }
 }

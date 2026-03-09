@@ -51,6 +51,10 @@ namespace Emulator {
         void OP_8xy3(); // XOR Vx, Vy - Set Vx = VX XOR Vy
         void OP_8xy4(); // ADD Vx, Vy - Set Vx = Vx + Vy, Set VF = carry
         void OP_8xy5(); // SUB Vx, Vy - Set Vx = Vx - Vy, Set VF = Vx > Vy
+        void OP_8xy6(); // SHR Vx - Set Vx =  Vx SHR 1
+        void OP_8xy7(); // SUBN Vx, Vy - Set Vx = Vy - Vx, Set VF = Vy > Vx
+        void OP_8xYE(); // SHL Vx {, Vy}
+        void OP_9xy0(); // SNE Vx, Vy - Skip next instruction if Vx != Vy
 
     private:
         uint8_t registers[16]{}; // VF, last register address 0xFu

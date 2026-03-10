@@ -10,6 +10,9 @@ namespace Emulator {
     constexpr unsigned int FONTSET_SIZE = 80;
     constexpr unsigned int FONTSET_START_ADDRESS = 0x50;
 
+    constexpr unsigned int VIDEO_HEIGHT = 50;
+    constexpr unsigned int VIDEO_WIDTH = 50;
+
     inline uint8_t fontset[FONTSET_SIZE] =
     {
         0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
@@ -55,6 +58,10 @@ namespace Emulator {
         void OP_8xy7(); // SUBN Vx, Vy - Set Vx = Vy - Vx, Set VF = Vy > Vx
         void OP_8xYE(); // SHL Vx {, Vy}
         void OP_9xy0(); // SNE Vx, Vy - Skip next instruction if Vx != Vy
+        void OP_Annn(); // LD I, addr - Set I = nnn
+        void OP_Bnnn(); // JP V0, addr - Jump to location nnn + V0
+        void OP_Cxkk(); // RND Vx, byte - Set Vx = random byte AND kk
+        void OP_Dxyn(); // DRW Vx, Vy, nibble - Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision
 
     private:
         uint8_t registers[16]{}; // VF, last register address 0xFu

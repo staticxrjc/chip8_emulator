@@ -205,4 +205,57 @@ namespace Emulator {
         }
 
     }
+
+    void Chip8::OP_Annn() {
+        const uint16_t address = opcode & 0x0FFFu;
+
+        index = address;
+    }
+
+    void Chip8::OP_Bnnn() {
+        const uint16_t address = opcode & 0x0FFFu;
+
+        pc = address + registers[0];
+    }
+
+    void Chip8::OP_Cxkk() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+        const uint8_t byte = (opcode & 0x00FFu);
+
+        registers[Vx] = randByte(randGen) & byte;
+    }
+
+    void Chip8::OP_Dxyn() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+        const uint8_t Vy = (opcode & 0x00F0u) >> 4u;
+        const uint8_t height = (opcode & 0x000Fu);
+
+        // Wrap if going beyond screen boundaries
+        const uint8_t xPos = registers[Vx] % VIDEO_WIDTH;
+        const uint8_t yPos = registers[Vy] % VIDEO_HEIGHT;
+
+        registers[0xF] = 0;
+
+        for (size_t row{}; row < height; ++row) {
+            const uint8_t spriteByte = memory[index + row];
+
+            for (size_t col{}; col < 8; ++col) {
+                const uint8_t spritePixel = spriteByte & (0x80 >> col);
+                uint32_t* screenPixel = &video[(yPos + row) * VIDEO_WIDTH + (xPos + col)];
+
+                // Sprite pixel is on
+                if (spritePixel)
+                {
+                    // Screen pixel also on - collision
+                    if (*screenPixel == 0xFFFFFFFF)
+                    {
+                        registers[0xF] = 1;
+                    }
+
+                    // Effectively XOR with the sprite pixel
+                    *screenPixel ^= 0xFFFFFFFF;
+                }
+            }
+        }
+    }
 }

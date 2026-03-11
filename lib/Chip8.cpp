@@ -258,4 +258,30 @@ namespace Emulator {
             }
         }
     }
+
+    void Chip8::OP_Ex9e() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        const uint8_t key = registers[Vx];
+
+        if (keypad[Vx]) {
+            pc += 2;
+        }
+    }
+
+    void Chip8::OP_ExA1() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        const uint8_t key = registers[Vx];
+
+        if (!keypad[Vx]) {
+            pc += 2;
+        }
+    }
+
+    void Chip8::OP_Fx07() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        registers[Vx] = delayTimer;
+    }
 }

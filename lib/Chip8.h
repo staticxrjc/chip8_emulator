@@ -62,6 +62,9 @@ namespace Emulator {
         void OP_Bnnn(); // JP V0, addr - Jump to location nnn + V0
         void OP_Cxkk(); // RND Vx, byte - Set Vx = random byte AND kk
         void OP_Dxyn(); // DRW Vx, Vy, nibble - Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision
+        void OP_Ex9e(); // SKP Vx - Skip the next instruction if a key with the value of Vx is pressed
+        void OP_ExA1(); // SKNP Vx - Skip the next instruction if a key with the value of Vx is not pressed
+        void OP_Fx07(); // LD Vx, DT - Set Vx = delay timer value
 
     private:
         uint8_t registers[16]{}; // VF, last register address 0xFu

@@ -139,10 +139,9 @@ namespace Emulator {
         const uint8_t Vy = (opcode & 0x00F0u) >> 4u;
 
         const uint16_t sum = registers[Vx] + registers[Vy];
-        if ( sum > 255U) {
+        if (sum > 255U) {
             registers[0xF] = 1;
-        }
-        else {
+        } else {
             registers[0xF] = 0;
         }
 
@@ -155,13 +154,11 @@ namespace Emulator {
 
         if (Vx > Vy) {
             registers[0xF] = 1;
-        }
-        else {
+        } else {
             registers[0xF] = 0;
         }
 
         registers[Vx] -= registers[Vy];
-
     }
 
     void Chip8::OP_8xy6() {
@@ -179,8 +176,7 @@ namespace Emulator {
 
         if (Vy > Vx) {
             registers[0xF] = 1;
-        }
-        else {
+        } else {
             registers[0xF] = 0;
         }
 
@@ -203,7 +199,6 @@ namespace Emulator {
         if (registers[Vx] != registers[Vy]) {
             pc += 2;
         }
-
     }
 
     void Chip8::OP_Annn() {
@@ -241,14 +236,12 @@ namespace Emulator {
 
             for (size_t col{}; col < 8; ++col) {
                 const uint8_t spritePixel = spriteByte & (0x80 >> col);
-                uint32_t* screenPixel = &video[(yPos + row) * VIDEO_WIDTH + (xPos + col)];
+                uint32_t *screenPixel = &video[(yPos + row) * VIDEO_WIDTH + (xPos + col)];
 
                 // Sprite pixel is on
-                if (spritePixel)
-                {
+                if (spritePixel) {
                     // Screen pixel also on - collision
-                    if (*screenPixel == 0xFFFFFFFF)
-                    {
+                    if (*screenPixel == 0xFFFFFFFF) {
                         registers[0xF] = 1;
                     }
 
@@ -283,5 +276,70 @@ namespace Emulator {
         const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
 
         registers[Vx] = delayTimer;
+    }
+
+    void Chip8::OP_Fx0A() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        if (keypad[0]) {
+            registers[Vx] = 0;
+        } else if (keypad[1]) {
+            registers[Vx] = 1;
+        } else if (keypad[2]) {
+            registers[Vx] = 2;
+        } else if (keypad[3]) {
+            registers[Vx] = 3;
+        } else if (keypad[4]) {
+            registers[Vx] = 4;
+        } else if (keypad[5]) {
+            registers[Vx] = 5;
+        } else if (keypad[6]) {
+            registers[Vx] = 6;
+        } else if (keypad[7]) {
+            registers[Vx] = 7;
+        } else if (keypad[8]) {
+            registers[Vx] = 8;
+        } else if (keypad[9]) {
+            registers[Vx] = 9;
+        } else if (keypad[10]) {
+            registers[Vx] = 10;
+        } else if (keypad[11]) {
+            registers[Vx] = 11;
+        } else if (keypad[12]) {
+            registers[Vx] = 12;
+        } else if (keypad[13]) {
+            registers[Vx] = 13;
+        } else if (keypad[14]) {
+            registers[Vx] = 14;
+        } else if (keypad[15]) {
+            registers[Vx] = 15;
+        } else {
+            pc -= 2;
+        }
+    }
+
+    void Chip8::OP_Fx15() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        delayTimer = registers[Vx];
+    }
+
+    void Chip8::OP_Fx18() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        soundTimer = registers[Vx];
+    }
+
+    void Chip8::OP_Fx1E() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        index += registers[Vx];
+    }
+
+    void Chip8::OP_Fx29() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+        const uint8_t digit = registers[Vx];
+
+        index = FONTSET_START_ADDRESS + (5 * digit);
     }
 }

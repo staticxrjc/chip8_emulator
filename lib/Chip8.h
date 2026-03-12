@@ -65,6 +65,11 @@ namespace Emulator {
         void OP_Ex9e(); // SKP Vx - Skip the next instruction if a key with the value of Vx is pressed
         void OP_ExA1(); // SKNP Vx - Skip the next instruction if a key with the value of Vx is not pressed
         void OP_Fx07(); // LD Vx, DT - Set Vx = delay timer value
+        void OP_Fx0A(); // LD Vx, K - Wait for a key press, store the value of the key in Vx
+        void OP_Fx15(); // LD DT, Vx - Set delay timer = Vx
+        void OP_Fx18(); // LS ST, Vx - Set sound timer = Vx
+        void OP_Fx1E(); // ADD I, Vx - Set I = I + Vx
+        void OP_Fx29(); // LD F, Vx - Set I = Location of sprite for digit Vx
 
     private:
         uint8_t registers[16]{}; // VF, last register address 0xFu

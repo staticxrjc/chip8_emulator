@@ -342,4 +342,36 @@ namespace Emulator {
 
         index = FONTSET_START_ADDRESS + (5 * digit);
     }
+
+    void Chip8::OP_Fx33() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+        uint8_t value = registers[Vx];
+
+        // Ones-place
+        memory[index + 2] = value % 10;
+        value /= 10;
+
+        // Tens-place
+        memory[index + 1] = value % 10;
+        value /= 10;
+
+        // Hundreds-place
+        memory[index] = value % 10;
+    }
+
+    void Chip8::OP_Fx55() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        for (uint8_t i = 0; i <= Vx; i++) {
+            memory[index + i] = registers[i];
+        }
+    }
+
+    void Chip8::OP_Fx66() {
+        const uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+        for (uint8_t i = 0; i <= Vx; i++) {
+            registers[i] = memory[index + i];
+        }
+    }
 }

@@ -70,6 +70,9 @@ namespace Emulator {
         void OP_Fx18(); // LS ST, Vx - Set sound timer = Vx
         void OP_Fx1E(); // ADD I, Vx - Set I = I + Vx
         void OP_Fx29(); // LD F, Vx - Set I = Location of sprite for digit Vx
+        void OP_Fx33(); // LD B, Vx - Store BCD representation of Vx in memory location I, I+1, and I+2
+        void OP_Fx55(); // LD [I], Vx - Store registers V0 through Vx in memory starting at location I
+        void OP_Fx66(); // LD Vx, [I] - Read registers V0 through Vx from memory starting at location I
 
     private:
         uint8_t registers[16]{}; // VF, last register address 0xFu

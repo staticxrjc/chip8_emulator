@@ -40,6 +40,7 @@ namespace Emulator {
     public:
         Chip8();
         void LoadROM(const std::string &filename);
+        void Cycle();
 
         // Op Codes
         void OP_00E0(); // CLS - Clear the Display

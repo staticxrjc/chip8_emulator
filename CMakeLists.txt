@@ -3,6 +3,9 @@ project(Emulator)
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+
 include(FetchContent)
 FetchContent_Declare(
         spdlog
@@ -11,15 +14,9 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(spdlog)
 
-FetchContent_Declare(
-        SDL
-        GIT_REPOSITORY https://github.com/libsdl-org/SDL
-        GIT_TAG release-3.4.2
-)
-FetchContent_MakeAvailable(SDL)
-
 add_subdirectory(lib)
 add_subdirectory(tests)
+add_subdirectory(vendor)
 
 add_executable(${PROJECT_NAME} main.cpp)
 

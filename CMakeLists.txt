@@ -20,4 +20,9 @@ add_subdirectory(vendor)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE spdlog::spdlog SDL3::SDL3)
+target_link_libraries(${PROJECT_NAME} PRIVATE
+        spdlog::spdlog
+        SDL3::SDL3
+        Chip8
+        Platform
+)

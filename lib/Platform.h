@@ -10,11 +10,10 @@
 namespace Emulator {
     class Platform {
     public:
-        Platform(const std::string &title, uint8_t windowWidth, uint8_t windowHeight, uint8_t textureWidth,
-                 uint8_t textureHeight);
+        Platform(const std::string &title, int windowWidth, int windowHeight, int textureWidth, int textureHeight);
         ~Platform();
 
-        void Update(const char *buffer, int pitch) const;
+        void Update(void const *buffer, int pitch) const;
         bool ProcessInput(uint8_t *keys);
 
     private:

@@ -86,6 +86,9 @@ namespace Emulator {
         void TableF();
         void OP_NULL();
 
+        uint32_t video[64 * 32]{};
+        uint8_t keypad[16]{};
+
     private:
         uint8_t registers[16]{}; // VF, last register address 0xFu
         uint8_t memory[4096]{};
@@ -95,8 +98,6 @@ namespace Emulator {
         uint8_t sp{};
         uint8_t delayTimer{};
         uint8_t soundTimer{};
-        uint8_t keypad[16]{};
-        uint32_t video[64 * 32]{};
         uint16_t opcode;
 
         Chip8Func table[0xF + 1];
